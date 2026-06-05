@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THUHI MD PAIRING SYSTEM</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(30, 41, 59, 0.7);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .logo {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 3px solid #00df89;
+            box-shadow: 0 0 20px #00df89;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: #00df89;
+            letter-spacing: 2px;
+        }
+        p {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 25px;
+        }
+        input {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 2px solid #334155;
+            border-radius: 50px;
+            background: #0f172a;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus {
+            border-color: #00df89;
+            box-shadow: 0 0 10px rgba(0, 223, 137, 0.5);
+        }
+        button {
+            width: 100%;
+            background: #00df89;
+            color: #0f172a;
+            padding: 12px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(0, 223, 137, 0.4);
+        }
+        button:hover {
+            background: #00b36c;
+            transform: translateY(-2px);
+        }
+        #resultBox {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(15, 23, 42, 0.6);
+            display: none;
+            border: 1px dashed #00df89;
+        }
+        .code {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff007f;
+            letter-spacing: 4px;
+            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+        }
+        .loading {
+            color: #f59e0b;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <img class="logo" src="https://i.ibb.co/7xWx6q4N/image.png" alt="THUHI MD">
+    <h1>𝐓𝐇𝐔𝐇𝐈 𝐌𝐃</h1>
+    <p>පහතින් ඔයාගේ WhatsApp අංකය රටේ කේතය සමඟ ඇතුළත් කර Pairing Code එක ලබාගන්න.</p>
+    
+    <input type="text" id="numberInput" placeholder="ఉදා: 94771234567">
+    <button onclick="getCode()">GET PAIRING CODE</button>
+
+    <div id="resultBox">
+        <div id="statusText" class="loading">කේතය සකසමින් පවතී, කරුණාකර තත්පර කිහිපයක් රැඳී සිටින්න...</div>
+        <div id="codeDisplay" class="code"></div>
+    </div>
+</div>
+
+<script>
+    async function getCode() {
+        const num = document.getElementById('numberInput').value;
+        const resultBox = document.getElementById('resultBox');
+        const statusText = document.getElementById('statusText');
+        const codeDisplay = document.getElementById('codeDisplay');
+
+        if(!num) {
+            alert('කරුණාකර නම්බර් එකක් ඇතුළත් කරන්න!');
+            return;
+        }
+
+        resultBox.style.display = 'block';
+        statusText.className = 'loading';
+        statusText.innerText = '𝐓𝐇𝐔𝐇𝐈 𝐌𝐃 සම්බන්ධ වෙමින් පවතී...';
+        codeDisplay.innerText = '';
+
+        try {
+            const response = await fetch(`/code?number=${num}`);
+            const data = await response.json();
+
+            if(data.code) {
+                statusText.className = '';
+                statusText.innerHTML = '<span style="color: #00df89;">🎉 ඔයාගේ කේතය සූදානම්!</span><br><small>මේක ඉක්මනින් WhatsApp Linked Devices එකට දාන්න.</small>';
+                codeDisplay.innerText = data.code;
+            } else if(data.error) {
+                statusText.innerText = data.error;
+                statusText.style.color = '#ef4444';
+            }
+        } catch(e) {
+            statusText.innerText = 'සර්වර් එක සම්බන්ධ කරගැනීමට නොහැකි වුණා!';
+            statusText.style.color = '#ef4444';
+        }
+    }
+</script>
+
+</body>
+</html>
