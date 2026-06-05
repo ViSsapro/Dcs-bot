@@ -122,39 +122,40 @@
 </div>
 
 <script>
-    async function getCode() {
-        const num = document.getElementById('numberInput').value;
-        const resultBox = document.getElementById('resultBox');
-        const statusText = document.getElementById('statusText');
-        const codeDisplay = document.getElementById('codeDisplay');
+    async function getPairingCode() {
+        const numberInput = document.getElementById('phoneNumber').value;
+        const statusBox = document.getElementById('statusBox');
 
-        if(!num) {
-            alert('කරුණාකර නම්බර් එකක් ඇතුළත් කරන්න!');
+        if (!numberInput) {
+            statusBox.innerHTML = "<span style='color: #ff4d4d;'>කරුණාකර නම්බර් එකක් ඇතුළත් කරන්න!</span>";
             return;
         }
 
-        resultBox.style.display = 'block';
-        statusText.className = 'loading';
-        statusText.innerText = '𝐓𝐇𝐔𝐇𝐈 𝐌𝐃 සම්බන්ධ වෙමින් පවතී...';
-        codeDisplay.innerText = '';
+        statusBox.innerHTML = "<span style='color: #ffa500;'>කෝඩ් එක සකසමින් පවතී. කරුණාකර රැඳී සිටින්න... ⏳</span>";
 
         try {
-            const response = await fetch(`/code?number=${num}`);
+            // සර්වර් එකේ /code එකට නම්බර් එක යවනවා
+            const response = await fetch(`/code?number=${numberInput}`);
             const data = await response.json();
 
-            if(data.code) {
-                statusText.className = '';
-                statusText.innerHTML = '<span style="color: #00df89;">🎉 ඔයාගේ කේතය සූදානම්!</span><br><small>මේක ඉක්මනින් WhatsApp Linked Devices එකට දාන්න.</small>';
-                codeDisplay.innerText = data.code;
-            } else if(data.error) {
-                statusText.innerText = data.error;
-                statusText.style.color = '#ef4444';
+            if (data.code) {
+                // කෝඩ් එක ආවම ඒක ලස්සනට රෝස පාටින් ලොකුවට පෙන්වනවා
+                statusBox.innerHTML = `
+                    <div style="font-size: 24px; font-weight: bold; color: #ff66cc; letter-spacing: 2px; margin-bottom: 10px;">
+                        ${data.code}
+                    </div>
+                    <span style="font-size: 12px; color: #aaa;">↑ මේ කෝඩ් එක ඉක්මනින් කොපි කරගෙන WhatsApp ලින්ක් කරන්න!</span>
+                `;
+            } else if (data.error) {
+                statusBox.innerHTML = `<span style='color: #ff4d4d;'>${data.error}</span>`;
             }
-        } catch(e) {
-            statusText.innerText = 'සර්වර් එක සම්බන්ධ කරගැනීමට නොහැකි වුණා!';
-            statusText.style.color = '#ef4444';
+        } catch (error) {
+            statusBox.innerHTML = "<span style='color: #ff4d4d;'>සර්වර් එකෙන් ප්‍රතිචාරයක් නැත. නැවත උත්සාහ කරන්න!</span>";
         }
     }
+
+    // බටන් එක ක්ලික් එකට ෆන්ක්ෂන් එක සම්බන්ධ කිරීම
+    document.querySelector('button').setAttribute('onclick', 'getPairingCode()');
 </script>
 
 </body>
