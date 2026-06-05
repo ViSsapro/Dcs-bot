@@ -1,0 +1,14 @@
+{
+  "name": "thuhi-md-bot",
+  "version": "1.0.0",
+  "description": "𝐓𝐇𝐔𝐇𝐈 𝐌𝐃 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩 𝐁𝐨𝐭",
+  "main": "index.js",
+  "type": "commonjs",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.6.0",
+    "pino": "^8.14.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
