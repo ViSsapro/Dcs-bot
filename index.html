@@ -3,121 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THUHI MD PAIRING SYSTEM</title>
+    <title>THUHI MD PAIRING</title>
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #fff;
+        }
+
+        body {
+            background: #0f172a;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 20px;
         }
+
         .container {
-            background: rgba(30, 41, 59, 0.7);
-            padding: 30px;
+            background: #1e293b;
+            border: 2px solid #334155;
             border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
+            padding: 30px;
+            width: 100%;
             max-width: 400px;
-            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
-        .logo {
-            width: 130px;
-            height: 130px;
+
+        .logo-area {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .logo-img {
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
-            border: 3px solid #00df89;
-            box-shadow: 0 0 20px #00df89;
+            border: 4px solid #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
             object-fit: cover;
-            margin-bottom: 15px;
         }
+
         h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-            color: #00df89;
-            letter-spacing: 2px;
+            color: #00ff88;
+            font-size: 28px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            font-weight: bold;
         }
+
         p {
-            font-size: 13px;
             color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
             margin-bottom: 25px;
         }
+
         input {
             width: 100%;
-            padding: 12px 20px;
-            margin: 10px 0;
-            box-sizing: border-box;
+            padding: 15px;
+            border-radius: 30px;
             border: 2px solid #334155;
-            border-radius: 50px;
             background: #0f172a;
             color: #fff;
             font-size: 16px;
             text-align: center;
             outline: none;
+            margin-bottom: 20px;
             transition: 0.3s;
         }
+
         input:focus {
-            border-color: #00df89;
-            box-shadow: 0 0 10px rgba(0, 223, 137, 0.5);
+            border-color: #00ff88;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
         }
+
         button {
             width: 100%;
-            background: #00df89;
-            color: #0f172a;
-            padding: 12px;
+            padding: 15px;
+            border-radius: 30px;
             border: none;
-            border-radius: 50px;
+            background: #00ff88;
+            color: #0f172a;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
-            margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(0, 223, 137, 0.4);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
         }
+
         button:hover {
-            background: #00b36c;
+            background: #00e177;
             transform: translateY(-2px);
         }
-        #resultBox {
-            margin-top: 25px;
+
+        /* කෝඩ් එක සහ විස්තර පෙන්නන ප්‍රධාන කොටුව */
+        #statusBox {
+            width: 100%;
+            min-height: 80px;
+            border: 2px dashed #334155;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             padding: 15px;
-            border-radius: 10px;
-            background: rgba(15, 23, 42, 0.6);
-            display: none;
-            border: 1px dashed #00df89;
-        }
-        .code {
-            font-size: 28px;
-            font-weight: bold;
-            color: #ff007f;
-            letter-spacing: 4px;
-            margin: 10px 0;
-            text-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
-        }
-        .loading {
-            color: #f59e0b;
-            font-weight: bold;
+            background: rgba(15, 23, 42, 0.5);
+            transition: 0.3s;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img class="logo" src="https://i.ibb.co/7xWx6q4N/image.png" alt="THUHI MD">
-    <h1>𝐓𝐇𝐔𝐇𝐈 𝐌𝐃</h1>
-    <p>පහතින් ඔයාගේ WhatsApp අංකය රටේ කේතය සමඟ ඇතුළත් කර Pairing Code එක ලබාගන්න.</p>
-    
-    <input type="text" id="numberInput" placeholder="ఉදා: 94771234567">
-    <button onclick="getCode()">GET PAIRING CODE</button>
+    <div class="logo-area">
+        <!-- ඔයාගේ කරාටි ලෝගෝ එක -->
+        <img class="logo-img" src="https://i.ibb.co/7xWx6q4N/image.png" alt="THUHI MD">
+    </div>
 
-    <div id="resultBox">
-        <div id="statusText" class="loading">කේතය සකසමින් පවතී, කරුණාකර තත්පර කිහිපයක් රැඳී සිටින්න...</div>
-        <div id="codeDisplay" class="code"></div>
+    <h1>THUHI MD</h1>
+    <p>පහතින් ඔයාගේ WhatsApp අංකය රටේ කේතය (94...) සමඟ ඇතුළත් කර Pairing Code එක ලබාගන්න.</p>
+
+    <!-- නම්බර් එක ගහන තැන -->
+    <input type="number" id="phoneNumber" placeholder="94701153310" value="94701153310">
+
+    <!-- බටන් එක -->
+    <button onclick="getPairingCode()">GET PAIRING CODE</button>
+
+    <!-- කෝඩ් එක මැජික් එකක් වගේ මැදින් මතුවන කොටුව -->
+    <div id="statusBox">
+        <span style="color: #64748b; font-size: 14px;">කෝඩ් එක ලබාගැනීමට බටන් එක ඔබන්න.</span>
     </div>
 </div>
 
@@ -127,35 +146,35 @@
         const statusBox = document.getElementById('statusBox');
 
         if (!numberInput) {
-            statusBox.innerHTML = "<span style='color: #ff4d4d;'>කරුණාකර නම්බර් එකක් ඇතුළත් කරන්න!</span>";
+            statusBox.innerHTML = "<span style='color: #ef4444; font-weight: bold;'>කරුණාකර නම්බර් එකක් ඇතුළත් කරන්න!</span>";
             return;
         }
 
-        statusBox.innerHTML = "<span style='color: #ffa500;'>කෝඩ් එක සකසමින් පවතී. කරුණාකර රැඳී සිටින්න... ⏳</span>";
+        // බටන් එක එබුව ගමන් කොටුව ඇතුළේ වෙනස් වෙනවා
+        statusBox.style.borderColor = "#eab308";
+        statusBox.innerHTML = "<span style='color: #eab308; font-weight: bold;'>කෝඩ් එක සකසමින් පවතී. කරුණාකර රැඳී සිටින්න... ⏳</span>";
 
         try {
-            // සර්වර් එකේ /code එකට නම්බර් එක යවනවා
             const response = await fetch(`/code?number=${numberInput}`);
             const data = await response.json();
 
             if (data.code) {
-                // කෝඩ් එක ආවම ඒක ලස්සනට රෝස පාටින් ලොකුවට පෙන්වනවා
+                statusBox.style.borderColor = "#00ff88";
                 statusBox.innerHTML = `
-                    <div style="font-size: 24px; font-weight: bold; color: #ff66cc; letter-spacing: 2px; margin-bottom: 10px;">
+                    <div style="font-size: 28px; font-weight: bold; color: #00ff88; letter-spacing: 4px; margin-bottom: 5px;">
                         ${data.code}
                     </div>
-                    <span style="font-size: 12px; color: #aaa;">↑ මේ කෝඩ් එක ඉක්මනින් කොපි කරගෙන WhatsApp ලින්ක් කරන්න!</span>
+                    <span style="font-size: 11px; color: #94a3b8;">↑ මේ කෝඩ් එක ඉක්මනින් කොපි කරගෙන WhatsApp ලින්ක් කරන්න!</span>
                 `;
             } else if (data.error) {
-                statusBox.innerHTML = `<span style='color: #ff4d4d;'>${data.error}</span>`;
+                statusBox.style.borderColor = "#ef4444";
+                statusBox.innerHTML = `<span style='color: #ef4444; font-weight: bold;'>${data.error}</span>`;
             }
         } catch (error) {
-            statusBox.innerHTML = "<span style='color: #ff4d4d;'>සර්වර් එකෙන් ප්‍රතිචාරයක් නැත. නැවත උත්සාහ කරන්න!</span>";
+            statusBox.style.borderColor = "#ef4444";
+            statusBox.innerHTML = "<span style='color: #ef4444; font-weight: bold;'>සර්වර් එක සම්බන්ධ කරගන්න බැරි වුණා. පසුව උත්සාහ කරන්න!</span>";
         }
     }
-
-    // බටන් එක ක්ලික් එකට ෆන්ක්ෂන් එක සම්බන්ධ කිරීම
-    document.querySelector('button').setAttribute('onclick', 'getPairingCode()');
 </script>
 
 </body>
